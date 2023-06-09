@@ -1,0 +1,90 @@
+<template>
+  <div id="cesiumContainer"></div>
+</template>
+
+<script>
+import Cesium from 'cesium/Cesium'
+import 'cesium/Widgets/widgets.css'
+export default {
+  name: 'CylinderGeometry',
+  mounted () {
+    let viewer = this.initCesium()
+
+    this.addCylinderGeometry(viewer)
+  },
+  methods: {
+    initCesium: function () {
+      Cesium.Ion.defaultAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkZjg4ZjljZC1mZGM3LTRlZjEtYjg3MC00MjZkNGU3YjI5ZWUiLCJpZCI6MTU5NTIsImlhdCI6MTYwNTE0ODM5OX0.LjxeKrgAo7Ksk8405kSAhYwF0nKcF2w2DGJnKHh51N8'
+      let viewer = new Cesium.Viewer('cesiumContainer', {
+        animation: false,
+        baseLayerPicker: false,
+        fullscreenButton: false,
+        geocoder: false,
+        homeButton: false,
+        infoBox: true,
+        sceneModePicker: false,
+        navigationHelpButton: false,
+        scene3DOnly: true,
+        timeline: false,
+        selectionIndicator: false, // 是否显示选取指示器组件
+        shouldAnimate: false, // 自动播放动画控件
+        shadows: true, // 是否显示光照投射的阴影
+        terrainShadows: Cesium.ShadowMode.RECEIVE_ONLY, // 地质接收阴影
+        sceneMode: Cesium.SceneMode.SCENE3D,
+        clock: new Cesium.Clock(),
+        imageryProvider: new Cesium.UrlTemplateImageryProvider({url: 'http://mt1.google.cn/vt/lyrs=s&hl=zh-CN&x={x}&y={y}&z={z}&s=Gali'}),
+        terrainProvider: new Cesium.EllipsoidTerrainProvider()
+      })
+      viewer._cesiumWidget._creditContainer.style.display = 'none' // 去除版权信息
+      return viewer
+    },
+    addCylinderGeometry (viewer) {
+      // create cylinder geometry
+      let cylinder1 = new Cesium.CylinderGeometry({
+        length: 200000,
+        topRadius: 80000,
+        bottomRadius: 200000
+      })
+      let geometry1 = Cesium.CylinderGeometry.createGeometry(cylinder1)
+
+      let cylinderInstance1 = new Cesium.GeometryInstance({
+        geometry: geometry1,
+        modelMatrix: Cesium.Matrix4.multiplyByTranslation(Cesium.Transforms.eastNorthUpToFixedFrame(
+          Cesium.Cartesian3.fromDegrees(-75.59777, 40.03883)), new Cesium.Cartesian3(0.0, 0.0, 100.0), new Cesium.Matrix4()),
+        attributes: {
+          color: Cesium.ColorGeometryInstanceAttribute.fromColor(Cesium.Color.BLUE)
+        },
+        id: 'cylinderInstance1'
+      })
+
+      let cylinder2 = new Cesium.CylinderGeometry({
+        length: 800000,
+        topRadius: 500000,
+        bottomRadius: 500000
+      })
+      let geometry2 = Cesium.CylinderGeometry.createGeometry(cylinder2)
+
+      let cylinderInstance2 = new Cesium.GeometryInstance({
+        geometry: geometry2,
+        modelMatrix: Cesium.Matrix4.multiplyByTranslation(Cesium.Transforms.eastNorthUpToFixedFrame(
+          Cesium.Cartesian3.fromDegrees(-75.59777, 40.03883)), new Cesium.Cartesian3(0.0, 0.0, 1000000.0), new Cesium.Matrix4()),
+        attributes: {
+          color: Cesium.ColorGeometryInstanceAttribute.fromColor(Cesium.Color.RED)
+        },
+        id: 'cylinderInstance2'
+      })
+
+      let primitive = new Cesium.Primitive({
+        geometryInstances: [cylinderInstance1, cylinderInstance2],
+        asynchronous: false, // 是否采用多线程
+        appearance: new Cesium.PerInstanceColorAppearance({
+          translucent: false, // 半透明
+          flat: true// 当 true 时，片段着色器中将使用平面阴影，这意味着不考虑光照
+        })
+      })
+
+      viewer.scene.primitives.add(primitive)
+    }
+  }
+}
+</script>

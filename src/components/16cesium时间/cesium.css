@@ -1,0 +1,12 @@
+#animationContainer{
+  position: absolute;
+  bottom: 50px;
+  right: 30px;
+  width: 200px;
+  height: 150px;
+  background: aqua;
+  opacity: 0.5;
+  color: red;
+  font-size: 18px;
+  line-height: 20px;
+}
