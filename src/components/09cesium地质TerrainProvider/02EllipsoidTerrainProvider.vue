@@ -35,12 +35,12 @@ export default {
         terrainShadows: Cesium.ShadowMode.RECEIVE_ONLY, // 地质接收阴影
         sceneMode: Cesium.SceneMode.SCENE3D,
         clock: new Cesium.Clock(),
-        imageryProvider: new Cesium.UrlTemplateImageryProvider({url: 'http://mt1.google.cn/vt/lyrs=s&hl=zh-CN&x={x}&y={y}&z={z}&s=Gali'})
-        /* terrainProvider: new Cesium.CesiumTerrainProvider({
+        imageryProvider: new Cesium.UrlTemplateImageryProvider({url: 'http://mt1.google.cn/vt/lyrs=s&hl=zh-CN&x={x}&y={y}&z={z}&s=Gali'}),
+        terrainProvider: new Cesium.CesiumTerrainProvider({
             url: Cesium.IonResource.fromAssetId(1),
             requestVertexNormals : true,//顶点法线效果
             requestWaterMask:true,//水效果
-          }), */
+          }),
       })
       viewer._cesiumWidget._creditContainer.style.display = 'none' // 去除版权信息
       viewer.scene.globe.depthTestAgainstTerrain = true

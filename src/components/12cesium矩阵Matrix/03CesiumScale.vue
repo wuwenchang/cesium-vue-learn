@@ -74,8 +74,17 @@ export default {
       const scaleMat41 = Cesium.Matrix4.fromArray([
         1.0, 0.0, 0.0, 0.0,
         0.0, 2.0, 0, 0.0,
-        0.0, 0, 3.0, 0.0,
-        0.0, 0.0, 0.0, 1.0
+        0.0, 0, 1.0, 0.0,
+        0, 0, 0, 1.0
+        // 2000000, 2000000, 2000000, 1.0
+      ])
+
+      const scaleMat44 = Cesium.Matrix4.fromArray([
+        1.0, 0.0, 0.0, 0.0,
+        0.0, 1.0, 0, 0.0,
+        0.0, 0, 1.0, 0.0,
+        1000000, 1000000, 1000000, 1.0
+        // 2000000, 2000000, 2000000, 1.0
       ])
 
       // 方式二创建缩放矩阵
@@ -84,6 +93,8 @@ export default {
       let modelMatrix = boxInstance1.modelMatrix
       let matrix4 = new Cesium.Matrix4()
       Cesium.Matrix4.multiply(modelMatrix, scaleMat41, matrix4)
+      Cesium.Matrix4.multiply(matrix4, scaleMat44, matrix4)
+      Cesium.Matrix4.multiply(matrix4, scaleMat44, matrix4)
 
       boxInstance1.modelMatrix = matrix4
       viewer.scene.primitives.add(primitive)

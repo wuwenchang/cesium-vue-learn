@@ -99,9 +99,9 @@ export default {
       // 创建平移矩阵方法二
       const translation = Cesium.Cartesian3.fromArray([1000000, 1000000, 1000000])
       const translationMat42 = Cesium.Matrix4.fromTranslation(translation)
-
+      console.log(modelMatrix, translation, matrix4)
       Cesium.Matrix4.multiply(modelMatrix, translationMat42, matrix4)
-
+      console.log(matrix4)
       boxInstance1.modelMatrix = matrix4
       viewer.scene.primitives.add(primitive)
     }

@@ -114,6 +114,7 @@ export default {
         }
       })
       viewer.trackedEntity = entity
+      viewer.zoomTo(entity)
 
       this.updatePostProcess()
     },
